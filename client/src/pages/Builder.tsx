@@ -54,13 +54,13 @@ const Builder: React.FC = () => {
       <ChatSection messages={chatMessages} onSendMessage={handleNewMessage} />
       {/* <TabSystem code={code} preview={preview} />
        */}
-      <div className="w-full bg-gray-900 rounded-lg shadow-lg p-4 h-[calc(100vh-8rem)]">
+      <div className="w-full bg-gray-900 rounded-lg shadow-lg p-6 h-[calc(100vh-8rem)]">
         <TabView activeTab={activeTab} onTabChange={setActiveTab} />
         <div className="h-[calc(100%-4rem)]">
           {activeTab === "code" ? (
             <CodeEditor file={null} />
           ) : (
-            <PreviewFrame webContainer={webcontainer} />
+            webcontainer && <PreviewFrame webContainer={webcontainer} />
           )}
         </div>
       </div>

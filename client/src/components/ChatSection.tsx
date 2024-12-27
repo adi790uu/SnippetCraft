@@ -21,8 +21,8 @@ const ChatSection: React.FC<ChatSectionProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full lg:w-1/3 p-6">
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-xl p-6 h-full border border-gray-700">
+    <div className="flex flex-col w-full lg:w-1/2">
+      <div className=" backdrop-blur-sm shadow-xl p-6 h-full">
         <h2 className="text-xl font-bold mb-6 text-gray-100">Chat Interface</h2>
         <div className="overflow-y-auto h-[calc(100vh-300px)] mb-4 space-y-4">
           {messages.map((message: ChatMessage, index: number) => (

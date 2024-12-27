@@ -13,28 +13,11 @@ export function PreviewFrame({ webContainer }: PreviewFrameProps) {
   async function main() {
     await webContainer.mount(files);
     const installProcess = await webContainer.spawn("npm", ["install"]);
-
-    installProcess.output.pipeTo(
-      new WritableStream({
-        write(data) {
-          console.log(data);
-        },
-      })
-    );
+    await installProcess.exit;
 
     const runningProcess = await webContainer.spawn("npm", ["run", "dev"]);
 
     runningProcess.output.pipeTo(
-      new WritableStream({
-        write(data) {
-          console.log(data);
-        },
-      })
-    );
-
-    const listFiles = await webContainer.spawn("ls", ["src", "-l"]);
-
-    listFiles.output.pipeTo(
       new WritableStream({
         write(data) {
           console.log(data);
