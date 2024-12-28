@@ -1,10 +1,11 @@
 import Editor from "@monaco-editor/react";
 
-// interface CodeEditorProps {
-//   file: FileItem | null;
-// }
+interface CodeEditorProps {
+  file: FileItem | null;
+  onChange: (newContent: string) => void;
+}
 
-export function CodeEditor({ file }) {
+export const CodeEditor: React.FC<CodeEditorProps> = ({ file, onChange }) => {
   if (!file) {
     return (
       <div className="h-full flex items-center justify-center text-gray-400">
@@ -19,8 +20,13 @@ export function CodeEditor({ file }) {
       defaultLanguage="typescript"
       theme="vs-dark"
       value={file.content || ""}
+      onChange={(newValue) => {
+        if (onChange && newValue !== undefined) {
+          onChange(newValue);
+        }
+      }}
       options={{
-        readOnly: true,
+        readOnly: false,
         minimap: { enabled: false },
         fontSize: 14,
         wordWrap: "on",
@@ -28,4 +34,4 @@ export function CodeEditor({ file }) {
       }}
     />
   );
-}
+};

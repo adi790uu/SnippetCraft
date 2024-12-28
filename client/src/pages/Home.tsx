@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
   const [prompt, setPrompt] = useState("");
@@ -7,10 +8,12 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleGenerate = () => {
-    navigate("/builder", { state: { prompt, description } });
+  const handleGenerate = async () => {
     console.log("Prompt:", prompt);
     console.log("Description:", description);
+    const response = await axios.get("http://localhost:8000/api/template");
+    const template = response.data;
+    navigate("/builder", { state: { prompt, description, template } });
   };
 
   return (

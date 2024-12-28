@@ -1,17 +1,16 @@
 import { WebContainer } from "@webcontainer/api";
 import { useEffect, useState } from "react";
-import { files } from "../base_template";
 
 interface PreviewFrameProps {
   webContainer: WebContainer;
+  template: any;
 }
 
-export function PreviewFrame({ webContainer }: PreviewFrameProps) {
+export function PreviewFrame({ webContainer, template }: PreviewFrameProps) {
   // In a real implementation, this would compile and render the preview
   const [url, setUrl] = useState("");
-
   async function main() {
-    await webContainer.mount(files);
+    await webContainer.mount(template);
     const installProcess = await webContainer.spawn("npm", ["install"]);
     await installProcess.exit;
 
