@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     HOST_URL: str
     DB_URL: str
+    GOOGLE_API_KEY: str
+    MODEL_NAME: str
 
 
 class DevelopmentSettings(Settings):

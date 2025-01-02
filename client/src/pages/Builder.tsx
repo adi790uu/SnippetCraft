@@ -19,9 +19,6 @@ const Builder: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"code" | "preview">("code");
 
   const webcontainer = useWebContainer();
-  const [preview, setPreview] = useState<string>(
-    "<div>Preview will render here</div>"
-  );
 
   useEffect(() => {
     if (!webcontainer || Object.keys(component).length === 0) return;
@@ -109,7 +106,6 @@ const Builder: React.FC = () => {
       export default ${message.replace(/\s+/g, "")};
       `;
       setCode(simulatedCode);
-      setPreview(`<div><h1>${message}</h1></div>`);
     }, 1000);
   };
 

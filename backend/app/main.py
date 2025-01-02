@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.core.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.template import react_base_template
+from app.schemas.chat import ChatRequest
+from app.external.google.google import SnippetAgent
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -21,9 +23,20 @@ def read_root():
     return {"message": "Welcome to the FastAPI server!"}
 
 
-@app.get("/api/template")
-def get_template():
-    return react_base_template
+@app.post("/api/template")
+async def get_template(request: ChatRequest):
+    agent = SnippetAgent(model_name=settings.MODEL_NAME)
+    valid_query = await agent.chat_with_agent_with_tools(
+        prompt=request.user_query,
+    )
+    return {"valid_query": valid_query, "template": react_base_template}
+
+
+@app.post("/api/chat")
+async def chat_with_agent(request: ChatRequest):
+    agent = SnippetAgent(model_name=settings.MODEL_NAME)
+    response = await agent.chat_with_agent(prompt=request.user_query)
+    return response
 
 
 @app.get("/settings")
