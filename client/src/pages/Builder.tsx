@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ChatSection from "../components/ChatSection";
 import { ChatMessage } from "../components/types";
 import { useWebContainer } from "../hooks/useWebContainer";
 import { PreviewFrame } from "../components/PreviewFrame";
 import { TabView } from "../components/TabView";
 import { CodeEditor } from "../components/CodeEditor";
 import { useLocation } from "react-router-dom";
+import { MessageCircle, Code, Eye } from "lucide-react";
+import ChatSection from "../components/ChatSection";
 
 const Builder: React.FC = () => {
   const location = useLocation();
@@ -110,20 +111,38 @@ const Builder: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-200 flex flex-col lg:flex-row">
-      <ChatSection messages={chatMessages} onSendMessage={handleNewMessage} />
+    <div className=" text-white flex flex-col">
+      <div className="flex flex-col lg:flex-row gap-6 p-6">
+        <aside className="lg:w-1/3 w-full p-4  rounded-lg">
+          <h2 className="text-xl font-semibold mb-4 flex items-center space-x-2">
+            <MessageCircle className="w-6 h-6 text-pink-400" />
+            <span>Chat</span>
+          </h2>
+          <div className="overflow-y-auto max-h-[80vh]">
+            <ChatSection
+              messages={chatMessages}
+              onSendMessage={handleNewMessage}
+            />
+          </div>
+        </aside>
 
-      <div className="w-full bg-gray-900 rounded-lg shadow-lg p-6 h-[calc(100vh-8rem)]">
-        <TabView activeTab={activeTab} onTabChange={setActiveTab} />
-        <div className="h-[calc(100%-4rem)]">
-          {activeTab === "code" ? (
-            <CodeEditor file={code} onChange={setCode} />
-          ) : (
-            webcontainer && (
+        <main className="flex-1 p-6 flex flex-col gap-6 bg-gray-900 rounded-lg shadow-lg">
+          <TabView activeTab={activeTab} onTabChange={setActiveTab} />
+          <div className="flex-1 p-3 shadow-md">
+            {activeTab === "code" ? (
+              <div className="h-full flex flex-col">
+                <CodeEditor file={code} onChange={setCode} />
+              </div>
+            ) : webcontainer ? (
               <PreviewFrame webContainer={webcontainer} template={template} />
-            )
-          )}
-        </div>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-400">
+                <Eye className="w-12 h-12 text-gray-500" />
+                <p>No Preview Available</p>
+              </div>
+            )}
+          </div>
+        </main>
       </div>
     </div>
   );

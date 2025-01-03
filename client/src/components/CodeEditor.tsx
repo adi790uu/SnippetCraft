@@ -8,7 +8,7 @@ interface CodeEditorProps {
 export const CodeEditor: React.FC<CodeEditorProps> = ({ file, onChange }) => {
   if (!file) {
     return (
-      <div className="h-full flex items-center justify-center text-gray-400">
+      <div className="min-h-full flex items-center justify-center text-gray-400">
         Select a file to view its contents
       </div>
     );
